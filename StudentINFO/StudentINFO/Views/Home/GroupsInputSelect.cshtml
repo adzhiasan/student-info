@@ -1,0 +1,7 @@
+﻿<select name="group" id="">
+    <option>Группа</option>
+    @foreach (var item in ViewBag.Groups)
+    {
+        <option value=@item>@item</option>
+    }
+</select>

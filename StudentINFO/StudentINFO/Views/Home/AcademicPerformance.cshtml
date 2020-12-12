@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "AcademicPerformance";
+}
+<div class="rating">
+    <div class="main__container">
+        <div class="choice">
+            @using (Ajax.BeginForm("PreformanceResult", "Home", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "choice__form" }))
+            {
+                <select name="group" id="group">
+                    @foreach (var item in ViewBag.Groups)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+
+                <select name="discipline" id="discipline">
+                    @foreach (var item in ViewBag.Disciplines)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+
+                <input class="btn-confirm" type="submit" value="Выбор" />
+            }
+        </div>
+        <div id="results"></div>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+﻿@model StudentINFO.Models.PerformanceTable
+
+<table class="rating-table">
+    <tr class="rating-table__header">
+        <th class="fi-student">Ф.И. студента</th>
+        @for (int i = 0; i < 16; i++) {
+        <th class="seminar seminar--1">C@(i+1)</th>
+        }
+    </tr>
+    @for (int i = 0; i < Model.Table.Count(); i++)
+    {
+        <tr>
+            <td>@Model.GetStudent(i).Surname @Model.GetStudent(i).Name</td>
+            @foreach (var item in Model.GetGrades(i))
+            {
+                <td>@item</td>
+            }
+        </tr>
+    }
+</table>

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<StudentINFO.Models.News>
+@{
+    ViewBag.Title = "Info";
+}
+
+<div class="news">
+    <div class="main__container">
+        <div class="news__items">
+            @foreach (var item in Model)
+            {
+                <div class="news__item news__item--1">
+                    <p>
+                        @item.content;
+                    </p>
+                    <img class="news__item-img" src="~/Content/img/Кнопка.png" alt="">
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Schedule";
+}
+<div class="main">
+    <div class="main__container">
+        <div class="choice">
+            @using (Ajax.BeginForm("Schedule", "Home", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "choice__form" }))
+            {
+                <select name="group" id="group">
+                    @foreach (var item in ViewBag.Groups)
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+                <input class="btn-confirm" type="submit" value="Выбор" />
+            }
+        </div>
+        <div id="results"></div>
+    </div>
+</div>
+

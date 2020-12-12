@@ -1,0 +1,31 @@
+﻿@*@model IEnumerable<StudentINFO.Models.Class>*@
+@model IEnumerable<string>
+
+@for (int i = 0; i < 6; i++)
+{
+    <div class="shendule__wrapper">
+        <table class="shendule__table monday">
+            <tr id="table-header">
+                <td class="shendule__table-header">@ViewBag.Days[i]</td>
+            </tr>
+            @for (int j = 0; j < 6; j++)
+            {
+                if (Model.ElementAt(i * 6 + j) != null)
+                {
+                    <tr>
+                        <td class="monday--1">
+                            @Model.ElementAt(i * 6 + j)
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td class="monday--1"></td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+}
+

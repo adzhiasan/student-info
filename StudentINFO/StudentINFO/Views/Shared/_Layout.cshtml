@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Система мониторинга</title>
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/normalize.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@0;1&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="#"><img class="header__img" src="~/Content/img/Логотип.png" alt="Логотип"></a>
+            <nav class="nav">
+                @Html.ActionLink("Расписание", "SchedulePage", "Home", new { @class = "nav__link" })
+                @Html.ActionLink("Успеваемость", "AcademicPerformance", "Home", new { @class = "nav__link" })
+                @Html.ActionLink("Важная информация", "Info", "Home", new { @class = "nav__link" })
+            </nav>
+        </div>
+    </header>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

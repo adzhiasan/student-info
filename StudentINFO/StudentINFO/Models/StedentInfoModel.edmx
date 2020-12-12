@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="StudentInfoDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AcademicPerformances">
+          <Key>
+            <PropertyRef Name="PerformanceId" />
+          </Key>
+          <Property Name="PerformanceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FK_StudentId" Type="int" Nullable="false" />
+          <Property Name="FK_DisciplineId" Type="int" Nullable="false" />
+          <Property Name="NumSeminar" Type="int" Nullable="false" />
+          <Property Name="Grade" Type="int" />
+        </EntityType>
+        <EntityType Name="Classes">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumClass" Type="int" Nullable="false" />
+          <Property Name="FK_DisciplineId" Type="int" Nullable="false" />
+          <Property Name="FK_DayId" Type="int" Nullable="false" />
+          <Property Name="FK_GroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DaysOfWeek">
+          <Key>
+            <PropertyRef Name="DayId" />
+          </Key>
+          <Property Name="DayId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Disciplines">
+          <Key>
+            <PropertyRef Name="DisciplineId" />
+          </Key>
+          <Property Name="DisciplineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Faculties">
+          <Key>
+            <PropertyRef Name="FacultyId" />
+          </Key>
+          <Property Name="FacultyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="FK_FacultyId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="30" />
+          <Property Name="content" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="FatherName" Type="nvarchar" MaxLength="40" />
+          <Property Name="FK_GroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AcademicP__FK_Di__300424B4">
+          <End Role="Disciplines" Type="Self.Disciplines" Multiplicity="1" />
+          <End Role="AcademicPerformances" Type="Self.AcademicPerformances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplines">
+              <PropertyRef Name="DisciplineId" />
+            </Principal>
+            <Dependent Role="AcademicPerformances">
+              <PropertyRef Name="FK_DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AcademicP__FK_St__2F10007B">
+          <End Role="Students" Type="Self.Students" Multiplicity="1" />
+          <End Role="AcademicPerformances" Type="Self.AcademicPerformances" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="AcademicPerformances">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_DayI__31EC6D26">
+          <End Role="DaysOfWeek" Type="Self.DaysOfWeek" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="DayId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_DayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_Disc__30F848ED">
+          <End Role="Disciplines" Type="Self.Disciplines" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplines">
+              <PropertyRef Name="DisciplineId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_Grou__49C3F6B7">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Classes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Groups__FK_Facul__4AB81AF0">
+          <End Role="Faculties" Type="Self.Faculties" Multiplicity="1" />
+          <End Role="Groups" Type="Self.Groups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculties">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="FK_FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__FK_Gro__4BAC3F29">
+          <End Role="Groups" Type="Self.Groups" Multiplicity="1" />
+          <End Role="Students" Type="Self.Students" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="FK_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentInfoDBModelStoreContainer">
+          <EntitySet Name="AcademicPerformances" EntityType="Self.AcademicPerformances" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Classes" EntityType="Self.Classes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DaysOfWeek" EntityType="Self.DaysOfWeek" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disciplines" EntityType="Self.Disciplines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AcademicP__FK_Di__300424B4" Association="Self.FK__AcademicP__FK_Di__300424B4">
+            <End Role="Disciplines" EntitySet="Disciplines" />
+            <End Role="AcademicPerformances" EntitySet="AcademicPerformances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicP__FK_St__2F10007B" Association="Self.FK__AcademicP__FK_St__2F10007B">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="AcademicPerformances" EntitySet="AcademicPerformances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_DayI__31EC6D26" Association="Self.FK__Classes__FK_DayI__31EC6D26">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeek" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_Disc__30F848ED" Association="Self.FK__Classes__FK_Disc__30F848ED">
+            <End Role="Disciplines" EntitySet="Disciplines" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_Grou__49C3F6B7" Association="Self.FK__Classes__FK_Grou__49C3F6B7">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Groups__FK_Facul__4AB81AF0" Association="Self.FK__Groups__FK_Facul__4AB81AF0">
+            <End Role="Faculties" EntitySet="Faculties" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__FK_Gro__4BAC3F29" Association="Self.FK__Students__FK_Gro__4BAC3F29">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StudentInfoDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AcademicPerformance">
+          <Key>
+            <PropertyRef Name="PerformanceId" />
+          </Key>
+          <Property Name="PerformanceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FK_StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FK_DisciplineId" Type="Int32" Nullable="false" />
+          <Property Name="NumSeminar" Type="Int32" Nullable="false" />
+          <Property Name="Grade" Type="Int32" />
+          <NavigationProperty Name="Discipline" Relationship="Self.FK__AcademicP__FK_Di__300424B4" FromRole="AcademicPerformances" ToRole="Disciplines" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__AcademicP__FK_St__2F10007B" FromRole="AcademicPerformances" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassId" />
+          </Key>
+          <Property Name="ClassId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumClass" Type="Int32" Nullable="false" />
+          <Property Name="FK_DisciplineId" Type="Int32" Nullable="false" />
+          <Property Name="FK_DayId" Type="Int32" Nullable="false" />
+          <Property Name="FK_GroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DaysOfWeek" Relationship="Self.FK__Classes__FK_DayI__31EC6D26" FromRole="Classes" ToRole="DaysOfWeek" />
+          <NavigationProperty Name="Discipline" Relationship="Self.FK__Classes__FK_Disc__30F848ED" FromRole="Classes" ToRole="Disciplines" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Classes__FK_Grou__49C3F6B7" FromRole="Classes" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="DaysOfWeek">
+          <Key>
+            <PropertyRef Name="DayId" />
+          </Key>
+          <Property Name="DayId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Classes__FK_DayI__31EC6D26" FromRole="DaysOfWeek" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="Discipline">
+          <Key>
+            <PropertyRef Name="DisciplineId" />
+          </Key>
+          <Property Name="DisciplineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AcademicPerformances" Relationship="Self.FK__AcademicP__FK_Di__300424B4" FromRole="Disciplines" ToRole="AcademicPerformances" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Classes__FK_Disc__30F848ED" FromRole="Disciplines" ToRole="Classes" />
+        </EntityType>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="FacultyId" />
+          </Key>
+          <Property Name="FacultyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK__Groups__FK_Facul__4AB81AF0" FromRole="Faculties" ToRole="Groups" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="FK_FacultyId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Classes" Relationship="Self.FK__Classes__FK_Grou__49C3F6B7" FromRole="Groups" ToRole="Classes" />
+          <NavigationProperty Name="Faculty" Relationship="Self.FK__Groups__FK_Facul__4AB81AF0" FromRole="Groups" ToRole="Faculties" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Students__FK_Gro__4BAC3F29" FromRole="Groups" ToRole="Students" />
+        </EntityType>
+        <EntityType Name="News">
+          <Key>
+            <PropertyRef Name="NewsId" />
+          </Key>
+          <Property Name="NewsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FatherName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="FK_GroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AcademicPerformances" Relationship="Self.FK__AcademicP__FK_St__2F10007B" FromRole="Students" ToRole="AcademicPerformances" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Students__FK_Gro__4BAC3F29" FromRole="Students" ToRole="Groups" />
+        </EntityType>
+        <Association Name="FK__AcademicP__FK_Di__300424B4">
+          <End Role="Disciplines" Type="Self.Discipline" Multiplicity="1" />
+          <End Role="AcademicPerformances" Type="Self.AcademicPerformance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplines">
+              <PropertyRef Name="DisciplineId" />
+            </Principal>
+            <Dependent Role="AcademicPerformances">
+              <PropertyRef Name="FK_DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AcademicP__FK_St__2F10007B">
+          <End Role="Students" Type="Self.Student" Multiplicity="1" />
+          <End Role="AcademicPerformances" Type="Self.AcademicPerformance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Students">
+              <PropertyRef Name="StudentId" />
+            </Principal>
+            <Dependent Role="AcademicPerformances">
+              <PropertyRef Name="FK_StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_DayI__31EC6D26">
+          <End Role="DaysOfWeek" Type="Self.DaysOfWeek" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaysOfWeek">
+              <PropertyRef Name="DayId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_DayId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_Disc__30F848ED">
+          <End Role="Disciplines" Type="Self.Discipline" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disciplines">
+              <PropertyRef Name="DisciplineId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_DisciplineId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Classes__FK_Grou__49C3F6B7">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+          <End Role="Classes" Type="Self.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Classes">
+              <PropertyRef Name="FK_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Groups__FK_Facul__4AB81AF0">
+          <End Role="Faculties" Type="Self.Faculty" Multiplicity="1" />
+          <End Role="Groups" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Faculties">
+              <PropertyRef Name="FacultyId" />
+            </Principal>
+            <Dependent Role="Groups">
+              <PropertyRef Name="FK_FacultyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Students__FK_Gro__4BAC3F29">
+          <End Role="Groups" Type="Self.Group" Multiplicity="1" />
+          <End Role="Students" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Groups">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Students">
+              <PropertyRef Name="FK_GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StudentInfoDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AcademicPerformances" EntityType="Self.AcademicPerformance" />
+          <EntitySet Name="Classes" EntityType="Self.Class" />
+          <EntitySet Name="DaysOfWeeks" EntityType="Self.DaysOfWeek" />
+          <EntitySet Name="Disciplines" EntityType="Self.Discipline" />
+          <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="News" EntityType="Self.News" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK__AcademicP__FK_Di__300424B4" Association="Self.FK__AcademicP__FK_Di__300424B4">
+            <End Role="Disciplines" EntitySet="Disciplines" />
+            <End Role="AcademicPerformances" EntitySet="AcademicPerformances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicP__FK_St__2F10007B" Association="Self.FK__AcademicP__FK_St__2F10007B">
+            <End Role="Students" EntitySet="Students" />
+            <End Role="AcademicPerformances" EntitySet="AcademicPerformances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_DayI__31EC6D26" Association="Self.FK__Classes__FK_DayI__31EC6D26">
+            <End Role="DaysOfWeek" EntitySet="DaysOfWeeks" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_Disc__30F848ED" Association="Self.FK__Classes__FK_Disc__30F848ED">
+            <End Role="Disciplines" EntitySet="Disciplines" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Classes__FK_Grou__49C3F6B7" Association="Self.FK__Classes__FK_Grou__49C3F6B7">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Classes" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Groups__FK_Facul__4AB81AF0" Association="Self.FK__Groups__FK_Facul__4AB81AF0">
+            <End Role="Faculties" EntitySet="Faculties" />
+            <End Role="Groups" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Students__FK_Gro__4BAC3F29" Association="Self.FK__Students__FK_Gro__4BAC3F29">
+            <End Role="Groups" EntitySet="Groups" />
+            <End Role="Students" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StudentInfoDBModelStoreContainer" CdmEntityContainer="StudentInfoDBEntities">
+          <EntitySetMapping Name="AcademicPerformances">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.AcademicPerformance">
+              <MappingFragment StoreEntitySet="AcademicPerformances">
+                <ScalarProperty Name="PerformanceId" ColumnName="PerformanceId" />
+                <ScalarProperty Name="FK_StudentId" ColumnName="FK_StudentId" />
+                <ScalarProperty Name="FK_DisciplineId" ColumnName="FK_DisciplineId" />
+                <ScalarProperty Name="NumSeminar" ColumnName="NumSeminar" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.Class">
+              <MappingFragment StoreEntitySet="Classes">
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="NumClass" ColumnName="NumClass" />
+                <ScalarProperty Name="FK_DisciplineId" ColumnName="FK_DisciplineId" />
+                <ScalarProperty Name="FK_DayId" ColumnName="FK_DayId" />
+                <ScalarProperty Name="FK_GroupId" ColumnName="FK_GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaysOfWeeks">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.DaysOfWeek">
+              <MappingFragment StoreEntitySet="DaysOfWeek">
+                <ScalarProperty Name="DayId" ColumnName="DayId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Disciplines">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.Discipline">
+              <MappingFragment StoreEntitySet="Disciplines">
+                <ScalarProperty Name="DisciplineId" ColumnName="DisciplineId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Faculties">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.Faculty">
+              <MappingFragment StoreEntitySet="Faculties">
+                <ScalarProperty Name="FacultyId" ColumnName="FacultyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="FK_FacultyId" ColumnName="FK_FacultyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="News">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.News">
+              <MappingFragment StoreEntitySet="News">
+                <ScalarProperty Name="NewsId" ColumnName="NewsId" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="content" ColumnName="content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="StudentInfoDBModel.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="FK_GroupId" ColumnName="FK_GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
