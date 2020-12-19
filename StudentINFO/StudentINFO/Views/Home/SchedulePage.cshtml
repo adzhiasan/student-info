@@ -4,7 +4,7 @@
 <div class="main">
     <div class="main__container">
         <div class="choice">
-            @using (Ajax.BeginForm("Schedule", "Home", null, new AjaxOptions { UpdateTargetId = "results" }, new { @class = "choice__form" }))
+            @using (Ajax.BeginForm("Schedule", "Home", null, new AjaxOptions { UpdateTargetId = "results" }))
             {
                 <select name="group" id="group">
                     @foreach (var item in ViewBag.Groups)
